@@ -1,0 +1,70 @@
+<h1>Listar despesas</h1>
+
+<%= render 'filter'  %>
+
+<% if params[:dateBegin] != nil && params[:dateEnd] != nil && params[:dateBegin] != '' && params[:dateEnd] != '' %>
+	<% dateBegin = Date.parse(params[:dateBegin]) %>
+	<% dateEnd = Date.parse(params[:dateEnd]) %>
+<% end %>
+
+<div>
+<% if !@bills.empty? %>
+	<div class="tabela">
+	<table border>
+	  <thead>
+	    <tr align='left'>
+	      <th>Data</th>
+		  <th>Responsavel</th>
+	      <th>Descricao</th>
+	      <th>Valor</th>
+	      <th></th>
+	      <th></th>
+	      <th></th>
+	    </tr>
+	  </thead>
+
+	  <tbody>
+		<% valorTotal = 0.0 %>
+	    <% @bills.each do |bill| %>
+			<% if @responsible == nil && dateBegin == nil && dateEnd == nil %>
+			 	<%= render :partial => 'tablerow', :locals => {:bill => bill} %>
+				<% valorTotal += bill.value %>
+			<% else %>
+				<% if @responsible != nil && dateBegin == nil && dateEnd == nil %>
+					<% if @responsible == bill.responsible %>	
+						<%= render :partial => 'tablerow', :locals => {:bill => bill} %>
+						<% valorTotal += bill.value %>
+					<% end %>
+				<% else %>
+					<% if @responsible == nil && dateBegin != nil && dateEnd != nil %>
+						<% if dateBegin <= bill.date && dateEnd >= bill.date %>
+							<%= render :partial => 'tablerow', :locals => {:bill => bill} %>
+							<% valorTotal += bill.value %>						
+						<% end %>
+					<% else %>
+						<% if @responsible != nil && dateBegin != nil && dateEnd != nil %>
+							<% if @responsible == bill.responsible && dateBegin <= bill.date && dateEnd >= bill.date %>
+								<%= render :partial => 'tablerow', :locals => {:bill => bill} %>
+								<% valorTotal += bill.value %>				
+							<% end %>
+						<% end %>
+					<% end %>    
+				<% end %>  
+			<% end %>
+		<% end %>
+	  </tbody>
+	</table>
+	<br>
+
+	<h2>Total: R$ <%= number_with_precision(valorTotal, precision: 2) %></h2>
+	</div>
+<% else %>
+	<div class="tabela"><h2>Nao foi encontrada nenhuma despesa</h1></div>
+<% end %>
+
+<br>
+<div class="links">
+	<%= link_to 'Adicionar Despesa', new_bill_path %> &nbsp
+	<%= link_to 'Voltar ao inicio', root_path %>
+</div>
+</div>

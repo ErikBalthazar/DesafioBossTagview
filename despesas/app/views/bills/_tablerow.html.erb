@@ -1,0 +1,9 @@
+<tr>
+	<td><%= bill.date.strftime("%d/%m/%Y") %></td>
+	<td><%= bill.responsible.name %></td>
+	<td><%= bill.description %></td>
+	<td><font>R$ </font><%= number_with_precision(bill.value, precision: 2) %></td>
+	<td><%= link_to 'Exibir', bill %></td>
+	<td><%= link_to 'Editar', edit_bill_path(bill) %></td>
+	<td><%= link_to 'Excluir', bill, method: :delete, data: { confirm: 'Tem certeza?' } %></td>
+</tr>

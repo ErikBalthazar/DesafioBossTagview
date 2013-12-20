@@ -1,0 +1,64 @@
+<script>
+function validatesForm() {
+	description = document.getElementById('bill_description').value;
+	value = document.getElementById('bill_value').value;
+	message = "";
+	if (description == "") {
+		message += "Preencha o campo Descricao \n";
+		document.getElementById('bill_description').focus();
+	}
+
+	if (value == "") {
+		message += "Preencha o campo Valor \n";
+		document.getElementById('bill_value').focus();
+	}
+
+	if (value != "" && isNaN(value)) {
+		message += "Digite um numero inteiro ou real no campo Valor";
+		document.getElementById('bill_value').focus();
+	}
+
+
+	if (message == "") {
+		return true;
+	} else {
+		alert(message);
+		return false;
+	}
+}
+</script>
+
+<h1>Editando Despesa</h1>
+
+<%= form_for(@bill, :html => {:onsubmit => "return validatesForm()"}) do |f| %>
+  <% if @bill.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bill.errors.count, "error") %> prohibited this bill from being saved:</h2>
+
+      <ul>
+      <% @bill.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>	
+ 
+  <div class="field">
+    <%= f.label :date, "Data" %><br>
+    <%= f.date_select :date %>
+  </div>
+  <div class="field">
+    <%= f.label :description, "Descricao" %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :value, "Valor" %><br>
+    <%= f.text_field :value %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Salvar", class: 'btn' %>
+  </div>
+<% end %>
+
+<%= link_to 'Exibir', @bill %> |
+<%= link_to 'Voltar', bills_path %>

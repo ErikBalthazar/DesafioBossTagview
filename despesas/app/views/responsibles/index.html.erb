@@ -1,0 +1,36 @@
+<h1>Lista de Responsaveis</h1>
+
+<% if !@responsibles.empty? %>
+
+<table border>
+  <thead>
+    <tr align="left">
+      <th>Nome</th>
+      <th>E-mail</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @responsibles.each do |responsible| %>
+      <tr>
+        <td><%= responsible.name %></td>
+        <td><%= responsible.email %></td>
+        <td><%= link_to 'Exibir', responsible %></td>
+        <td><%= link_to 'Editar', edit_responsible_path(responsible) %></td>
+        <td><%= link_to 'Excluir', responsible, method: :delete, data: { confirm: 'Isso ira deletar as despesas dele tambem. Deseja mesmo excluir o responsavel?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% else %>
+<h2>Nao ha responsaveis cadastrados</h2>
+<% end %>
+
+<br>
+
+<%= link_to 'Adicionar Responsavel', new_responsible_path %> &nbsp
+<%= link_to 'Voltar ao inicio', root_path %>

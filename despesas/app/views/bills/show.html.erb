@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @bill.date.strftime("%d/%m/%Y") %>
+</p>
+
+<p>
+  <strong>Responsavel:</strong>
+  <%= @bill.responsible.name %>
+</p>
+
+<p>
+  <strong>Descricao:</strong>
+  <%= @bill.description %>
+</p>
+
+<p>
+  <strong>Valor:</strong>
+  <font> R$ <%= number_with_precision(@bill.value, precision: 2) %></font>
+</p>
+
+<%= link_to 'Editar', edit_bill_path(@bill) %> |
+<%= link_to 'Voltar', bills_path %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: 2013-12-18
+  description: MyText
+  value: 1.5
+  responsible_id: 
+
+two:
+  date: 2013-12-18
+  description: MyText
+  value: 1.5
+  responsible_id: 

@@ -1,0 +1,22 @@
+<div>
+	<%= form_tag('/bills', method: :get) do %>
+		<% vetName = [['-- Selecione --', ""]] %>
+		<% @responsibles.each do |res| %>
+		<% vetName << [res.name, res.id] %>
+		<% end %>
+		<div class="field">
+			<%= label_tag 'Responsavel' %> <br><br>
+			<%= select_tag "responsibles", options_for_select(vetName), class: 'combo' %>	
+		</div>
+		<div class="periodo">
+			<%= label_tag 'Periodo' %> <br><br>
+			<%= label_tag 'De' %>
+			<%= date_field_tag 'dateBegin' %>
+			<div style="position: relative; top:-28px; left: 235px;">
+				<%= label_tag 'Ate' %>
+				<%= date_field_tag 'dateEnd' %> <br><br>
+				<div style="position: relative; left: 117px;"><%= button_tag "Filtrar", class: 'btn' %></div>
+			</div>
+		</div>
+	<% end %>
+</div>

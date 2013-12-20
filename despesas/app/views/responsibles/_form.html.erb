@@ -1,0 +1,54 @@
+<script>
+function validatesForm() {
+	name = document.getElementById('responsible_name').value;
+	email = document.getElementById('responsible_email').value;
+	message = "";
+	if (name == "") {
+		message += "Preencha o campo Nome \n";
+		document.getElementById('responsible_name').focus();
+	}		
+	
+	if (email == "") {
+		message += "Preencha o campo E-mail \n";
+		document.getElementById('responsible_email').focus();
+	}	
+
+	if (email != "" && email.indexOf('@') == -1) {
+		message += "Digite um e-mail valido";
+		document.getElementById('responsible_email').focus();
+	}
+	
+	if (message == "") {
+		return true;	
+	} else {
+		alert(message);
+		return false;
+	}
+}
+</script>
+
+<%= form_for(@responsible, :html => {:onsubmit => "return validatesForm()"}) do |f| %>
+  <% if @responsible.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@responsible.errors.count, "erro") %> impediram o cadastro:</h2>
+      <ul>
+      <% @responsible.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name, "Nome" %><br>
+    <%= f.text_field :name, class: 'text' %>
+  </div>
+  <br>
+  <div class="field">
+    <%= f.label :email, "E-mail" %><br>
+    <%= f.text_field :email, class: 'text' %>
+  </div>
+  <div class="actions">
+    <%= f.submit "Salvar", class: 'btn' %>
+  </div>
+<% end %>
